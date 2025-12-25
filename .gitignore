@@ -1,0 +1,9 @@
+# Azure Static Web Apps
+.vscode/
+node_modules/
+.env
+.DS_Store
+
+# Build outputs
+dist/
+build/

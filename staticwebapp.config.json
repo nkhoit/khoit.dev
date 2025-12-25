@@ -1,9 +1,16 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/styles.css", "/script.js", "/images/*"]
+    "exclude": ["/styles.css", "/script.js", "/images/*", "/.well-known/*"]
   },
   "routes": [
+    {
+      "route": "/.well-known/webfinger",
+      "rewrite": "/.well-known/webfinger.json",
+      "headers": {
+        "content-type": "application/jrd+json"
+      }
+    },
     {
       "route": "/*",
       "allowedRoles": ["anonymous"]

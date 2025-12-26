@@ -1,12 +1,16 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/styles.css", "/script.js", "/images/*", "/.well-known/*"]
+    "exclude": ["/styles.css", "/script.js", "/images/*", "/.well-known/*", "/api/*"]
   },
   "routes": [
     {
       "route": "/.well-known/webfinger",
-      "rewrite": "/api/webfinger"
+      "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/api/*",
+      "allowedRoles": ["anonymous"]
     },
     {
       "route": "/*",
@@ -24,5 +28,9 @@
     ".css": "text/css",
     ".js": "application/javascript",
     ".html": "text/html"
+  },
+  "globalHeaders": {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS"
   }
 }

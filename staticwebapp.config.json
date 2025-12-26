@@ -6,10 +6,7 @@
   "routes": [
     {
       "route": "/.well-known/webfinger",
-      "rewrite": "/.well-known/webfinger.json",
-      "headers": {
-        "content-type": "application/jrd+json"
-      }
+      "rewrite": "/api/webfinger"
     },
     {
       "route": "/*",

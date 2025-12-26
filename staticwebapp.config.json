@@ -6,6 +6,7 @@
   "routes": [
     {
       "route": "/.well-known/webfinger",
+      "rewrite": "/api/webfinger",
       "allowedRoles": ["anonymous"]
     },
     {

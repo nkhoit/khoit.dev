@@ -1,108 +1,61 @@
 # khoit.dev
 
-Personal website for Nguyen Khoi Tran - Senior Software Engineer
+Khoi Tran’s personal site: two static HTML pages and one shared stylesheet.
+No frontend JavaScript, framework, dependencies, or build step.
 
-## 🚀 Tech Stack
+## Local redesign draft
 
-- HTML5
-- CSS3 (Custom styling with CSS variables)
-- Vanilla JavaScript
-- Azure Static Web Apps (for deployment)
+The homepage copy and abbreviated resume are drafts pending Khoi’s approval.
+The selected photo is the approved, metadata-free 580 × 580 WebP; no private
+source documents or unselected photos are included in this repository.
 
-## 📦 Deployment
+- `index.html` — short introduction, interests, photo, and contact links.
+- `resume/index.html` — brief experience and education, with earlier research
+  and student roles explicitly grouped.
+- `styles.css` — shared responsive typography and print styles.
+- `assets/khoi-shiro.webp` — selected photo, displayed at 200px wide.
+- `api/webfinger/` — existing Azure identity endpoint, unchanged.
+- `staticwebapp.config.json` and `.github/workflows/` — unchanged Azure routing
+  and deployment configuration.
 
-This site is configured for automatic deployment to Azure Static Web Apps.
+## Tests
 
-### Setting up Azure Static Web Apps
+Requires Python 3.9+ and Node.js 18+; no packages to install and no server needed.
+From the repository root:
 
-1. **Create Azure Static Web App:**
-   - Go to [Azure Portal](https://portal.azure.com)
-   - Click "Create a resource" → Search for "Static Web Apps"
-   - Click "Create"
-
-2. **Configure the Static Web App:**
-   - **Subscription:** Choose your Azure subscription
-   - **Resource Group:** Create new or select existing
-   - **Name:** `khoit-dev` (or your preferred name)
-   - **Plan type:** Free (perfect for personal sites)
-   - **Region:** Choose closest to your target audience
-   - **Source:** GitHub
-   - **GitHub Account:** Authorize and select `nkhoit/khoit.dev`
-   - **Branch:** `main`
-   - **Build Details:**
-     - Build Presets: `Custom`
-     - App location: `/` (root)
-     - Api location: (leave empty)
-     - Output location: (leave empty)
-
-3. **Deploy:**
-   - Click "Review + Create" → "Create"
-   - Azure will automatically create a GitHub Actions workflow in `.github/workflows/`
-   - Every push to `main` branch will trigger automatic deployment
-
-4. **Custom Domain (Optional):**
-   - In Azure Portal, go to your Static Web App
-   - Navigate to "Custom domains"
-   - Add `khoit.dev` as custom domain
-   - Follow DNS configuration instructions
-
-## 🛠️ Local Development
-
-Simply open `index.html` in your browser, or use a local server:
-
-```bash
-# Using Python
-python -m http.server 8000
-
-# Using Node.js (http-server)
-npx http-server
-
-# Using PHP
-php -S localhost:8000
+```sh
+python3 -B -m unittest discover -s tests -v
+node --test tests/webfinger.test.cjs
 ```
 
-Then visit `http://localhost:8000`
+The Python suite checks document structure, accessible labels, exact contact
+links, local link/asset targets, role dates, content brevity, no page JavaScript,
+plain styling, WebP dimensions and absence of metadata chunks. It also compares
+API/config/workflow bytes to the pre-redesign commit
+`47ba677eaef958ceb70ab4537580a7f38038c670` (requires that commit in local Git history).
+The Node suite invokes the real WebFinger handler and checks its responses and
+Azure function binding without an emulator.
 
-## 📁 Project Structure
+These are offline source/handler tests, not a substitute for browser visual QA
+or a deployed Azure integration test. External profile destinations are checked
+against the intended URLs, not fetched. Review desktop/mobile rendering,
+keyboard focus, and no-JS behavior in the private preview before approval.
 
-```
-khoit.dev/
-├── index.html              # Main HTML file
-├── styles.css              # Styling
-├── script.js               # JavaScript functionality
-├── staticwebapp.config.json # Azure Static Web Apps configuration
-├── .gitignore              # Git ignore rules
-└── README.md               # This file
-```
+## Preview and routing
 
-## 🎨 Features
+Serve the repository root with a static server, bound to loopback, and open `/`
+and `/resume/`. Root-relative links require HTTP serving rather than `file://`.
+For example: `python3 -m http.server 8000 --bind 127.0.0.1`.
 
-- **Responsive Design:** Works on all devices (mobile, tablet, desktop)
-- **Smooth Scrolling:** Navigation with smooth scroll animations
-- **Modern UI:** Clean, professional design with hover effects
-- **Performance:** Lightweight, no frameworks needed
-- **SEO Friendly:** Proper meta tags and semantic HTML
-- **Accessibility:** ARIA labels and keyboard navigation support
+`/resume/` has its own `resume/index.html`; it is not a client-side route.
+Azure’s existing `navigationFallback` applies to requests without a matching
+static file, so the new page needs no routing change. The wildcard route only
+allows anonymous access; it does not rewrite the resume. The existing
+`/.well-known/webfinger` rewrite to `/api/webfinger` is preserved.
+Reference: [Azure Static Web Apps configuration](https://learn.microsoft.com/en-us/azure/static-web-apps/configuration).
 
-## 🔧 Customization
+## Publishing caution
 
-### Update Content
-Edit `index.html` to update your experience, skills, or contact information.
-
-### Modify Styling
-Edit `styles.css` to change colors, fonts, or layout. CSS variables are defined at the top for easy customization:
-
-```css
-:root {
-    --primary-color: #0066cc;
-    --secondary-color: #005bb5;
-    /* ... more variables */
-}
-```
-
-### Add Features
-Edit `script.js` to add new interactive features or animations.
-
-## 📝 License
-
-© 2025 Nguyen Khoi Tran. All rights reserved.
+The existing workflow publishes pushes to `main` and creates public PR previews.
+Do not push, open a PR, or deploy this local draft without explicit approval.
+No Azure resources need to be created or modified for local review.

@@ -53,6 +53,7 @@ class SiteTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.pages = [Page(ROOT / "index.html"), Page(ROOT / "resume/index.html")]
+        cls.pages.extend(Page(path) for path in sorted((ROOT / "blog").rglob("index.html")))
 
     def test_document_structure_and_accessibility(self):
         for page in self.pages:
@@ -103,9 +104,12 @@ class SiteTests(unittest.TestCase):
         for phrase in ("Microsoft", "Azure allocator control plane", "local AI", "self-hosted tools", "old games", "cooking", "hiking", "game nights"):
             self.assertIn(phrase, text)
         self.assertLess(len(text.split()), 100)
+        self.assertIn("I also play TFT.", text)
+        self.assertEqual(next(n["text"] for n in home.tags("a") if n["attrs"]["href"] == "/blog/"), "Kuro’s blog")
         self.assertEqual({n["attrs"]["href"] for n in home.tags("a")}, {
             "mailto:hello@khoit.dev", "https://github.com/nkhoit",
             "https://www.linkedin.com/in/nktran/", "/resume/",
+            "https://lolchess.gg/profile/na/Nile-Fish/set18", "/blog/",
         })
 
     def test_resume_roles_dates_and_grouping(self):
@@ -180,7 +184,7 @@ class SiteTests(unittest.TestCase):
         config = json.loads((ROOT / "staticwebapp.config.json").read_text())
         self.assertNotEqual(self.pages[0].path.read_bytes(), self.pages[1].path.read_bytes())
         for route in config["routes"]:
-            for path in ("/resume/", "/resume/index.html", "/assets/khoi-shiro.webp"):
+            for path in ("/resume/", "/resume/index.html", "/assets/khoi-shiro.webp", "/blog/", "/blog/index.html", "/blog/hello/", "/blog/hello/index.html"):
                 if fnmatch.fnmatchcase(path, route["route"]):
                     self.assertNotIn("rewrite", route)
                     self.assertNotIn("redirect", route)

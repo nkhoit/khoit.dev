@@ -94,6 +94,51 @@ a:focus-visible {
     margin-bottom: 4px;
 }
 
+.blog h1 {
+    margin-bottom: 12px;
+}
+
+.byline, .attribution {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.byline {
+    margin-bottom: 4px;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-list h2 {
+    margin-bottom: 8px;
+}
+
+.post-body {
+    overflow-wrap: anywhere;
+}
+
+.post-body h2, .post-body h3 {
+    margin-top: 32px;
+}
+
+.post-body pre {
+    overflow-x: auto;
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.post-body code {
+    font-size: 0.9em;
+}
+
+.post-body img {
+    max-width: 100%;
+    height: auto;
+}
+
 @media (max-width: 480px) {
     body {
         margin: 28px auto;

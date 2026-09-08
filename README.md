@@ -3,9 +3,9 @@
 Khoi Tran’s personal site: two static HTML pages and one shared stylesheet.
 No frontend JavaScript, framework, dependencies, or build step.
 
-## Local redesign draft
+## Website
 
-The homepage copy and abbreviated resume are drafts pending Khoi’s approval.
+The homepage copy, abbreviated resume, and selected photo were approved by Khoi.
 The selected photo is the approved, metadata-free 580 × 580 WebP; no private
 source documents or unselected photos are included in this repository.
 

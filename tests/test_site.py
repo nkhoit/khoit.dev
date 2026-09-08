@@ -112,6 +112,16 @@ class SiteTests(unittest.TestCase):
             "https://lolchess.gg/profile/na/Nile-Fish/set18", "/blog/",
         })
 
+    def test_portrait_caption_identifies_shiro_and_water_taxi(self):
+        home = self.pages[0]
+        figures = home.tags("figure")
+        self.assertEqual(len(figures), 1)
+        self.assertEqual([n["tag"] for n in figures[0]["children"]], ["img", "figcaption"])
+        self.assertEqual(home.tags("figcaption")[0]["text"], "Me and my dog Shiro on the West Seattle Water Taxi, with Seattle behind us.")
+        alt = home.tags("img")[0]["attrs"]["alt"]
+        for phrase in ("Shiro", "West Seattle Water Taxi", "Seattle skyline"):
+            self.assertIn(phrase, alt)
+
     def test_resume_roles_dates_and_grouping(self):
         resume = self.pages[1]
         self.assertEqual([n["text"] for n in resume.tags("h2")], ["Experience", "Earlier research & student work", "Education"])

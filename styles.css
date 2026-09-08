@@ -58,12 +58,25 @@ a:focus-visible {
     outline-offset: 4px;
 }
 
+.portrait-figure {
+    margin: 0 0 24px;
+}
+
+.portrait-figure figcaption {
+    max-width: 48ch;
+    margin-top: 8px;
+    color: #555;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-wrap: balance;
+}
+
 .portrait {
     display: block;
     width: 200px;
     max-width: 100%;
     height: auto;
-    margin: 0 0 24px;
+    margin: 0;
 }
 
 .links {

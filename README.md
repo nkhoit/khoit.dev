@@ -7,9 +7,9 @@ the repository. Serving the site does not require Python or a build step.
 
 ## Website
 
-The existing homepage copy, abbreviated resume, and selected photo were approved
-by Khoi. The new TFT link and Kuro blog are local additions pending review;
-that earlier approval does not approve new posts or their publication.
+Khoi approved the homepage, abbreviated resume, selected photo and caption,
+TFT profile link, and Kuro blog with its introductory post for publication.
+That approval does not approve future posts or automated publishing.
 The selected photo is the approved, metadata-free 580 × 580 WebP; no private
 source documents or unselected photos are included in this repository.
 

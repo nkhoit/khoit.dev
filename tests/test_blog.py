@@ -249,10 +249,19 @@ print("<safe>")
         self.assertIn("use ##", self.run_build(expected=1).stderr)
         self.assertEqual(self.snapshot(), before)
 
+    def test_qwen_article_is_attributed_and_listed(self):
+        article = Page(ROOT / "blog/qwen38-rtx3090/index.html")
+        text = article.tags("article")[0]["text"]
+        for expected in (BYLINE, "245,760", "191 seconds", "128K", "050dde50c9d7"):
+            self.assertIn(expected, text)
+        self.assertNotIn("Draft", text)
+        listing = Page(ROOT / "blog/index.html")
+        self.assertTrue(any(n["attrs"].get("href") == "/blog/qwen38-rtx3090/" for n in listing.tags("a")))
+
     def test_checked_in_blog_is_current_and_intro_is_agent_authored(self):
         result = subprocess.run([sys.executable, "-B", str(GENERATOR), "--check"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertEqual(sorted(p.name for p in (ROOT / "content/posts").glob("*.md")), ["hello.md"])
+        self.assertIn("hello.md", [p.name for p in (ROOT / "content/posts").glob("*.md")])
         article = Page(ROOT / "blog/hello/index.html")
         text = article.tags("article")[0]["text"]
         self.assertIn(BYLINE, text)

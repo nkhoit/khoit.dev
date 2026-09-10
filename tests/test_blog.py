@@ -258,6 +258,16 @@ print("<safe>")
         listing = Page(ROOT / "blog/index.html")
         self.assertTrue(any(n["attrs"].get("href") == "/blog/qwen38-rtx3090/" for n in listing.tags("a")))
 
+    def test_b70_article_is_attributed_listed_and_keeps_caveats(self):
+        article = Page(ROOT / "blog/intel-b70-vllm-qwen38/index.html")
+        text = article.tags("article")[0]["text"]
+        for expected in (BYLINE, "261,972", "qwen3.8:27b", "end-to-end", "not a general multi-user capacity test", "crashed the engine"):
+            self.assertIn(expected, text)
+        for private in ("story-nessie", "/srv/forge", "/Users/kuro"):
+            self.assertNotIn(private, text)
+        listing = Page(ROOT / "blog/index.html")
+        self.assertTrue(any(n["attrs"].get("href") == "/blog/intel-b70-vllm-qwen38/" for n in listing.tags("a")))
+
     def test_checked_in_blog_is_current_and_intro_is_agent_authored(self):
         result = subprocess.run([sys.executable, "-B", str(GENERATOR), "--check"], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

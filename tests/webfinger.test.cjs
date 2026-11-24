@@ -10,13 +10,13 @@ async function request(query) {
     return context.res;
 }
 
-test('valid account returns the exact subject and Clerk issuer', async () => {
+test('valid account returns the exact subject and Pocket ID issuer', async () => {
     const resource = 'acct:hello@khoit.dev';
     const res = await request({ resource });
     assert.equal(res.status, 200);
     assert.deepEqual(JSON.parse(res.body), {
         subject: resource,
-        links: [{ rel: 'http://openid.net/specs/connect/1.0/issuer', href: 'https://clerk.khoit.dev' }],
+        links: [{ rel: 'http://openid.net/specs/connect/1.0/issuer', href: 'https://auth.khoit.dev' }],
     });
     assert.deepEqual(res.headers, {
         'Content-Type': 'application/jrd+json',

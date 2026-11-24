@@ -22,7 +22,7 @@ module.exports = async function (context, req) {
         "links": [
             {
                 "rel": "http://openid.net/specs/connect/1.0/issuer",
-                "href": "https://clerk.khoit.dev"
+                "href": "https://auth.khoit.dev"
             }
         ]
     };
